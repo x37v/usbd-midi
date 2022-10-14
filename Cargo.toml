@@ -1,6 +1,6 @@
 [package]
 name = "usbd-midi"
-version = "0.2.0"
+version = "0.2.1"
 authors = ["beau trepp <beautrepp@gmail.com>", "Florian Jung <flo@windfis.ch>"]
 edition = "2018"
 description = "A usb-midi implementation for usb-device"
@@ -9,11 +9,16 @@ license = "MIT"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-embedded-hal = "0.2.2"
-nb = "1.0.0"
-usb-device = "0.2.3"
-midi-convert = "0.1.0"
+#embedded-hal = "0.2.2"
+#nb = "1.0.0"
+usb-device = "0.2.9"
+midi-convert = {version = "0.1.1", features = ["defmt"], git="https://github.com/XIX-tech/midi-convert"}
+midi-types = { version = "0.1.3", features = ["defmt"], git="https://github.com/XIX-tech/midi-types"}
+defmt = { version = "0.3", optional = true }
 
-[dependencies.num_enum]
-version = "0.5.1"
-default-features = false
+[features]
+defmt = ["dep:defmt", "usb-device/defmt"]
+
+#[dependencies.num_enum]
+#version = "0.5.1"
+#default-features = false

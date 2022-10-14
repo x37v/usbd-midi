@@ -20,12 +20,14 @@ pub struct MidiClass<'a, B: UsbBus> {
 }
 
 #[derive(Debug)]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub enum MidiReadError {
     ParsingFailed(MidiPacketParsingError),
     UsbError(UsbError),
 }
 
 #[derive(Debug, PartialEq, Eq, Clone)]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub enum MidiClassCreateError {
     InvalidArguments,
 }

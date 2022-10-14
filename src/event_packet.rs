@@ -1,13 +1,15 @@
 use {
-    crate::{code_index_number, midi_types::MidiMessage},
+    crate::code_index_number,
     core::convert::TryFrom,
     midi_convert::{MidiRenderSlice, MidiTryParseSlice},
+    midi_types::MidiMessage,
 };
 
 /// A packet that communicates with the host
 /// Currently supported is sending the specified normal midi
 /// message over the supplied cable number
 #[derive(Debug, PartialEq)]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub struct UsbMidiEventPacket {
     cable_number: u8,
     message: MidiMessage,
@@ -28,6 +30,7 @@ impl From<UsbMidiEventPacket> for [u8; 4] {
 }
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub enum MidiPacketParsingError {
     InvalidData,
     MissingDataPacket,
@@ -73,11 +76,9 @@ impl UsbMidiEventPacket {
 #[cfg(test)]
 mod tests {
     use {
-        crate::{
-            event_packet::UsbMidiEventPacket,
-            midi_types::{Channel, Control, MidiMessage, Note, Program, Value14, Value7},
-        },
+        crate::event_packet::UsbMidiEventPacket,
         core::convert::TryFrom,
+        midi_types::{Channel, Control, MidiMessage, Note, Program, Value14, Value7},
     };
 
     macro_rules! decode_message_test {
