@@ -12,8 +12,8 @@ license = "MIT"
 #embedded-hal = "0.2.2"
 #nb = "1.0.0"
 usb-device = "0.2.9"
-midi-convert = "0.1.0"
-midi-types = "0.1.2"
+midi-convert = {version = "0.1.1", features = ["defmt"], git="https://github.com/XIX-tech/midi-convert"}
+midi-types = { version = "0.1.3", features = ["defmt"], git="https://github.com/XIX-tech/midi-types"}
 defmt = { version = "0.3", optional = true }
 
 [features]
