@@ -1,6 +1,6 @@
 [package]
 name = "usbd-midi"
-version = "0.2.0"
+version = "0.2.1"
 authors = ["beau trepp <beautrepp@gmail.com>", "Florian Jung <flo@windfis.ch>"]
 edition = "2018"
 description = "A usb-midi implementation for usb-device"
@@ -13,6 +13,7 @@ license = "MIT"
 #nb = "1.0.0"
 usb-device = "0.2.9"
 midi-convert = "0.1.0"
+defmt = { version = "0.3", optional = true }
 
 #[dependencies.num_enum]
 #version = "0.5.1"

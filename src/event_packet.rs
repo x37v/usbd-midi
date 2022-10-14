@@ -8,6 +8,7 @@ use {
 /// Currently supported is sending the specified normal midi
 /// message over the supplied cable number
 #[derive(Debug, PartialEq)]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub struct UsbMidiEventPacket {
     cable_number: u8,
     message: MidiMessage,
@@ -28,6 +29,7 @@ impl From<UsbMidiEventPacket> for [u8; 4] {
 }
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub enum MidiPacketParsingError {
     InvalidData,
     MissingDataPacket,
