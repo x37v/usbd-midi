@@ -5,5 +5,3 @@ pub mod constants;
 pub mod event_packet;
 pub mod midi_device;
 pub mod packet_reader;
-
-pub use midi_convert::midi_types;

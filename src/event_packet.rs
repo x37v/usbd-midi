@@ -1,7 +1,8 @@
 use {
-    crate::{code_index_number, midi_types::MidiMessage},
+    crate::code_index_number,
     core::convert::TryFrom,
     midi_convert::{MidiRenderSlice, MidiTryParseSlice},
+    midi_types::MidiMessage,
 };
 
 /// A packet that communicates with the host
@@ -75,11 +76,9 @@ impl UsbMidiEventPacket {
 #[cfg(test)]
 mod tests {
     use {
-        crate::{
-            event_packet::UsbMidiEventPacket,
-            midi_types::{Channel, Control, MidiMessage, Note, Program, Value14, Value7},
-        },
+        crate::event_packet::UsbMidiEventPacket,
         core::convert::TryFrom,
+        midi_types::{Channel, Control, MidiMessage, Note, Program, Value14, Value7},
     };
 
     macro_rules! decode_message_test {

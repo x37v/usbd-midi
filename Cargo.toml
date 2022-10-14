@@ -13,6 +13,7 @@ license = "MIT"
 #nb = "1.0.0"
 usb-device = "0.2.9"
 midi-convert = "0.1.0"
+midi-types = "0.1.2"
 defmt = { version = "0.3", optional = true }
 
 [features]
