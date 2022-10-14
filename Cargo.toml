@@ -9,11 +9,11 @@ license = "MIT"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-embedded-hal = "0.2.2"
-nb = "1.0.0"
-usb-device = "0.2.3"
+#embedded-hal = "0.2.2"
+#nb = "1.0.0"
+usb-device = "0.2.9"
 midi-convert = "0.1.0"
 
-[dependencies.num_enum]
-version = "0.5.1"
-default-features = false
+#[dependencies.num_enum]
+#version = "0.5.1"
+#default-features = false
