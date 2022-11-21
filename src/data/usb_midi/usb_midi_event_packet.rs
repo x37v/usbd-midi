@@ -1,5 +1,6 @@
 use crate::data::usb_midi::code_index_number::CodeIndexNumber;
 use core::{convert::TryFrom, ops::Shl};
+use midi_convert::{MidiTryParseSlice, MidiRenderSlice};
 
 use midi_types::MidiMessage;
 
@@ -21,7 +22,7 @@ impl From<UsbMidiEventPacket> for [u8; 4] {
 
         //TODO Sysex
         let mut data: [u8; 4] = [header, 0, 0, 0];
-        assert!(message.render(&mut data[1..]).is_ok());
+        assert_ne!(message.render_slice(&mut data[1..]), 0);
         data
     }
 }
@@ -43,7 +44,7 @@ impl TryFrom<&[u8]> for UsbMidiEventPacket {
         };
 
         let message =
-            MidiMessage::try_from(&buf[1..]).map_err(|_| MidiPacketParsingError::InvalidData)?;
+            MidiMessage::try_parse_slice(&buf[1..]).map_err(|_| MidiPacketParsingError::InvalidData)?;
 
         Ok(UsbMidiEventPacket {
             cable_number,
