@@ -1,4 +1,3 @@
-use crate::data::byte::u4::U4;
 use crate::data::usb_midi::cable_number::CableNumber;
 use crate::data::usb_midi::code_index_number::CodeIndexNumber;
 use core::convert::TryFrom;
@@ -16,12 +15,9 @@ pub struct UsbMidiEventPacket {
 impl From<UsbMidiEventPacket> for [u8; 4] {
     fn from(value: UsbMidiEventPacket) -> [u8; 4] {
         let message = value.message;
-        let cable_number = U4::from(value.cable_number);
-        let index_number = {
-            let code_index = CodeIndexNumber::find_from_message(&message);
-            U4::from(code_index)
-        };
-        let header = U4::combine(cable_number, index_number);
+        let cable_number: u8 = value.cable_number.into();
+        let index_number: u8 = CodeIndexNumber::find_from_message(&message).into();
+        let header = cable_number << 4 | index_number;
         let mut data: [u8; 4] = [header, 0, 0, 0];
         message.render_slice(&mut data[1..]);
 

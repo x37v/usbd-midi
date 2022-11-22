@@ -1,4 +1,3 @@
-use crate::data::byte::u4::U4;
 use core::convert::TryFrom;
 
 /// The Cable Number (CN) is a value ranging from 0x0 to 0xF
@@ -54,12 +53,6 @@ impl TryFrom<u8> for CableNumber {
 impl From<CableNumber> for u8 {
     fn from(value: CableNumber) -> u8 {
         value as u8
-    }
-}
-
-impl From<CableNumber> for U4 {
-    fn from(value: CableNumber) -> U4 {
-        U4::from_overflowing_u8(u8::from(value))
     }
 }
 
