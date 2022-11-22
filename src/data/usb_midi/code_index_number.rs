@@ -1,4 +1,3 @@
-use crate::data::byte::u4::U4;
 use crate::midi_types::MidiMessage;
 use core::convert::TryFrom;
 
@@ -18,9 +17,9 @@ impl TryFrom<u8> for CodeIndexNumber {
     }
 }
 
-impl From<CodeIndexNumber> for U4 {
-    fn from(value: CodeIndexNumber) -> U4 {
-        U4::from_overflowing_u8(value.0)
+impl From<CodeIndexNumber> for u8 {
+    fn from(value: CodeIndexNumber) -> u8 {
+        value.0
     }
 }
 
