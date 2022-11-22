@@ -1,6 +1,5 @@
-use crate::data::usb_midi::cable_number::CableNumber;
-use crate::data::usb_midi::code_index_number::CodeIndexNumber;
-use crate:: midi_types::MidiMessage;
+use crate::midi_types::MidiMessage;
+use crate::{cable_number::CableNumber, code_index_number::CodeIndexNumber};
 use core::convert::TryFrom;
 use midi_convert::{
     MidiParseError,
@@ -28,6 +27,16 @@ impl From<UsbMidiEventPacket> for [u8; 4] {
         message.render_slice(&mut data[1..]);
 
         data
+    }
+}
+
+impl From<(CableNumber, MidiMessage)> for UsbMidiEventPacket {
+    fn from(value: (CableNumber, MidiMessage)) -> Self {
+        let (cable_number, message) = value;
+        Self {
+            cable_number,
+            message
+        }
     }
 }
 
@@ -62,20 +71,13 @@ impl TryFrom<&[u8]> for UsbMidiEventPacket {
     }
 }
 
-impl UsbMidiEventPacket {
-    pub fn from_midi(cable: CableNumber, midi: MidiMessage) -> UsbMidiEventPacket {
-        UsbMidiEventPacket {
-            cable_number: cable,
-            message: midi,
-        }
-    }
-}
-
 #[cfg(test)]
 mod tests {
-    use crate::data::usb_midi::cable_number::CableNumber::{Cable0, Cable1};
-    use crate::data::usb_midi::usb_midi_event_packet::UsbMidiEventPacket;
-    use crate::midi_types::{Channel, Control, MidiMessage, Note, Program, Value14, Value7};
+    use crate::{
+        cable_number::CableNumber::{Cable0, Cable1},
+        event_packet::UsbMidiEventPacket,
+        midi_types::{Channel, Control, MidiMessage, Note, Program, Value14, Value7},
+    };
     use core::convert::TryFrom;
 
     macro_rules! decode_message_test {
