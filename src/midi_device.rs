@@ -1,7 +1,4 @@
-use crate::{
-    constants::*,
-    event_packet::{MidiPacketParsingError, UsbMidiEventPacket},
-};
+use crate::{constants::*, event_packet::UsbMidiEventPacket};
 use usb_device::{class_prelude::*, Result};
 
 const MIDI_IN_SIZE: u8 = 0x06;
@@ -15,11 +12,6 @@ pub struct MidiClass<'a, B: UsbBus> {
     standard_bulkin: EndpointIn<'a, B>,
     n_in_jacks: u8,
     n_out_jacks: u8,
-}
-
-pub enum MidiReadError {
-    ParsingFailed(MidiPacketParsingError),
-    UsbError(UsbError),
 }
 
 /// Invalid construction error struct
