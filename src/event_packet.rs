@@ -7,7 +7,6 @@ use midi_convert::{
     MidiTryParseSlice,
 };
 
-
 /// A packet that communicates with the host
 /// Currently supported is sending the specified normal midi
 /// message over the supplied cable number
