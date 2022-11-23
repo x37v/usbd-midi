@@ -4,6 +4,7 @@ use crate::{
 };
 use core::convert::TryFrom;
 
+/// Wrapper for parsing/iterating `UsbMidiEventPacket` messages from a slice
 pub struct MidiPacketBufferReader<'a> {
     inner: core::slice::Chunks<'a, u8>,
 }
