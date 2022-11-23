@@ -35,7 +35,7 @@ impl From<(CableNumber, MidiMessage)> for UsbMidiEventPacket {
         let (cable_number, message) = value;
         Self {
             cable_number,
-            message
+            message,
         }
     }
 }
