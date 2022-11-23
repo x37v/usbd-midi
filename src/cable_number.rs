@@ -23,6 +23,8 @@ pub enum CableNumber {
     Cable14 = 0xE,
     Cable15 = 0xF,
 }
+
+#[derive(Debug, Clone, Copy, Eq, PartialEq)]
 pub struct InvalidCableNumber(u8);
 
 impl TryFrom<u8> for CableNumber {

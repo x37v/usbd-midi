@@ -139,7 +139,10 @@ mod tests {
                 v.message,
                 MidiMessage::NoteOn(Channel::from(0), Note::from(36), Value7::from(127))
             );
-            assert_eq!(Some(Err(MidiPacketParsingError::MissingDataPacket)), iter.next());
+            assert_eq!(
+                Some(Err(MidiPacketParsingError::MissingDataPacket)),
+                iter.next()
+            );
             assert_eq!(None, iter.next());
         }
     }
