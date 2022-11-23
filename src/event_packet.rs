@@ -1,6 +1,6 @@
 use crate::{cable_number::CableNumber, code_index_number::CodeIndexNumber};
 use core::convert::TryFrom;
-use midi_convert::{midi_types::MidiMessage, MidiRenderSlice, MidiTryParseSlice};
+use midi_convert::{midi_types::MidiMessage, MidiParseError, MidiRenderSlice, MidiTryParseSlice};
 
 /// A packet that communicates with the host
 /// Currently supported is sending the specified normal midi
@@ -34,9 +34,10 @@ impl From<(CableNumber, MidiMessage)> for UsbMidiEventPacket {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone, Copy)]
+#[derive(Debug, PartialEq, Clone)]
 pub enum MidiPacketParsingError {
     MissingDataPacket,
+    MidiParseError(MidiParseError),
 }
 
 impl TryFrom<&[u8]> for UsbMidiEventPacket {
@@ -50,7 +51,7 @@ impl TryFrom<&[u8]> for UsbMidiEventPacket {
             //unwrap is safe because 0xFFu8 >> 4 is max 0xF which is the size of CableNumber
             let cable_number = CableNumber::try_from(header >> 4).unwrap();
             let message = MidiMessage::try_parse_slice(&value[1..])
-                .map_err(|_| MidiPacketParsingError::MissingDataPacket)?;
+                .map_err(|e| MidiPacketParsingError::MidiParseError(e))?;
 
             Ok(UsbMidiEventPacket {
                 cable_number,
