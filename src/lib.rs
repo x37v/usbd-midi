@@ -4,9 +4,17 @@
 pub use midi_types;
 pub use midi_convert;
 
-pub mod cable_number;
-pub mod code_index_number;
 pub mod constants;
-pub mod event_packet;
-pub mod midi_device;
-pub mod packet_reader;
+
+pub use {
+    midi_device::{MidiClass, MidiReadError, MidiClassInvalidArgs},
+    event_packet::{UsbMidiEventPacket, MidiPacketParsingError},
+    cable_number::{CableNumber, InvalidCableNumber},
+    packet_reader::MidiPacketBufferReader,
+};
+
+mod code_index_number;
+mod packet_reader;
+mod cable_number;
+mod midi_device;
+mod event_packet;
