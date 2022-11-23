@@ -29,14 +29,13 @@ impl From<(CableNumber, MidiMessage)> for UsbMidiEventPacket {
         let (cable_number, message) = value;
         Self {
             cable_number,
-            message
+            message,
         }
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub enum MidiPacketParsingError {
-    InvalidCableNumber(u8),
     MissingDataPacket,
 }
 
@@ -44,28 +43,20 @@ impl TryFrom<&[u8]> for UsbMidiEventPacket {
     type Error = MidiPacketParsingError;
 
     fn try_from(value: &[u8]) -> Result<Self, Self::Error> {
-        let raw_cable_number = match value.get(0) {
-            Some(byte) => *byte >> 4,
-            None => return Err(MidiPacketParsingError::MissingDataPacket),
-        };
+        if value.len() < 2 {
+            Err(MidiPacketParsingError::MissingDataPacket)
+        } else {
+            let header = value.first().unwrap();
+            //unwrap is safe because 0xFFu8 >> 4 is max 0xF which is the size of CableNumber
+            let cable_number = CableNumber::try_from(header >> 4).unwrap();
+            let message = MidiMessage::try_parse_slice(&value[1..])
+                .map_err(|_| MidiPacketParsingError::MissingDataPacket)?;
 
-        let cable_number = match CableNumber::try_from(u8::from(raw_cable_number)) {
-            Ok(val) => val,
-            _ => return Err(MidiPacketParsingError::InvalidCableNumber(raw_cable_number)),
-        };
-
-        let message_body = match value.get(1..) {
-            Some(bytes) => bytes,
-            None => return Err(MidiPacketParsingError::MissingDataPacket),
-        };
-
-        let message = MidiMessage::try_parse_slice(message_body)
-            .map_err(|_| MidiPacketParsingError::MissingDataPacket)?;
-
-        Ok(UsbMidiEventPacket {
-            cable_number,
-            message,
-        })
+            Ok(UsbMidiEventPacket {
+                cable_number,
+                message,
+            })
+        }
     }
 }
 
