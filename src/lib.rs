@@ -7,14 +7,14 @@ pub use midi_convert;
 pub mod constants;
 
 pub use {
-    midi_device::{MidiClass, MidiReadError, MidiClassInvalidArgs},
-    event_packet::{UsbMidiEventPacket, MidiPacketParsingError},
     cable_number::{CableNumber, InvalidCableNumber},
+    event_packet::{MidiPacketParsingError, UsbMidiEventPacket},
+    midi_device::{MidiClass, MidiClassInvalidArgs, MidiReadError},
     packet_reader::MidiPacketBufferReader,
 };
 
-mod code_index_number;
-mod packet_reader;
 mod cable_number;
-mod midi_device;
+mod code_index_number;
 mod event_packet;
+mod midi_device;
+mod packet_reader;
