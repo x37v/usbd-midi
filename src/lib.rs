@@ -8,7 +8,7 @@ pub mod constants;
 pub use {
     cable_number::{CableNumber, InvalidCableNumber},
     event_packet::{MidiPacketParsingError, UsbMidiEventPacket},
-    midi_device::{MidiClass, MidiClassInvalidArgs, MidiReadError},
+    midi_device::{MidiClass, MidiClassInvalidArgs},
     packet_reader::MidiPacketBufferReader,
 };
 
