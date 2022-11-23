@@ -7,9 +7,6 @@ use usb_device::{class_prelude::*, Result};
 const MIDI_IN_SIZE: u8 = 0x06;
 const MIDI_OUT_SIZE: u8 = 0x09;
 
-pub const MIDI_PACKET_SIZE: usize = 4;
-pub const MAX_PACKET_SIZE: usize = 64;
-
 ///Note we are using MidiIn here to refer to the fact that
 ///The Host sees it as a midi in device
 ///This class allows you to send data in

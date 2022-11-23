@@ -34,11 +34,9 @@ impl From<(CableNumber, MidiMessage)> for UsbMidiEventPacket {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq, Clone)]
 pub enum MidiPacketParsingError {
-    InvalidNote(u8),
     InvalidCableNumber(u8),
-    InvalidEventType(u8),
     MissingDataPacket,
 }
 
@@ -85,7 +83,7 @@ mod tests {
             $(
                 #[test]
                 fn $id() {
-                    let (usb_midi_data_packet,expected) = $value;
+                    let (usb_midi_data_packet, expected) = $value;
                     let message = UsbMidiEventPacket::try_from(&usb_midi_data_packet[..]).unwrap();
                     assert_eq!(expected, message);
                 }

@@ -66,50 +66,50 @@ mod tests {
         for _ in 0..2 {
             let v = iter.next().unwrap().unwrap();
             assert_eq!(
-                v.message(),
-                &MidiMessage::NoteOn(Channel::from(0), Note::from(36), Value7::from(127))
+                v.message,
+                MidiMessage::NoteOn(Channel::from(0), Note::from(36), Value7::from(127))
             );
 
             let v = iter.next().unwrap().unwrap();
             assert_eq!(
-                v.message(),
-                &MidiMessage::NoteOff(Channel::from(0), Note::from(36), Value7::from(0))
+                v.message,
+                MidiMessage::NoteOff(Channel::from(0), Note::from(36), Value7::from(0))
             );
 
             let v = iter.next().unwrap().unwrap();
             assert_eq!(
-                v.message(),
-                &MidiMessage::KeyPressure(Channel::from(0), Note::from(36), Value7::from(64))
+                v.message,
+                MidiMessage::KeyPressure(Channel::from(0), Note::from(36), Value7::from(64))
             );
 
             let v = iter.next().unwrap().unwrap();
             assert_eq!(
-                v.message(),
-                &MidiMessage::ProgramChange(Channel::from(0), Program::from(127))
+                v.message,
+                MidiMessage::ProgramChange(Channel::from(0), Program::from(127))
             );
 
             let v = iter.next().unwrap().unwrap();
             assert_eq!(
-                v.message(),
-                &MidiMessage::ChannelPressure(Channel::from(0), Value7::from(127))
+                v.message,
+                MidiMessage::ChannelPressure(Channel::from(0), Value7::from(127))
             );
 
             let v = iter.next().unwrap().unwrap();
             assert_eq!(
-                v.message(),
-                &MidiMessage::PitchBendChange(Channel::from(0), Value14::from((64, 32)))
+                v.message,
+                MidiMessage::PitchBendChange(Channel::from(0), Value14::from((64, 32)))
             );
 
             let v = iter.next().unwrap().unwrap();
             assert_eq!(
-                v.message(),
-                &MidiMessage::ControlChange(Channel::from(1), Control::from(1), Value7::from(32))
+                v.message,
+                MidiMessage::ControlChange(Channel::from(1), Control::from(1), Value7::from(32))
             );
 
             let v = iter.next().unwrap().unwrap();
             assert_eq!(
-                v.message(),
-                &MidiMessage::ControlChange(Channel::from(1), Control::from(1), Value7::from(123))
+                v.message,
+                MidiMessage::ControlChange(Channel::from(1), Control::from(1), Value7::from(123))
             );
         }
         assert_eq!(None, iter.next());
@@ -117,14 +117,14 @@ mod tests {
 
     #[test]
     fn read_partial() {
-        let reader = MidiPacketBufferReader::new(&VALID_BUF);
+        let reader = MidiPacketBufferReader::new(&VALID_BUF[0..4]);
         let mut iter = reader.into_iter();
 
         assert_eq!(iter.len(), 1);
         let v = iter.next().unwrap().unwrap();
         assert_eq!(
-            v.message(),
-            &MidiMessage::NoteOn(Channel::from(0), Note::from(36), Value7::from(127))
+            v.message,
+            MidiMessage::NoteOn(Channel::from(0), Note::from(36), Value7::from(127))
         );
         assert_eq!(None, iter.next());
 
@@ -135,10 +135,10 @@ mod tests {
             assert_eq!(iter.len(), 2);
             let v = iter.next().unwrap().unwrap();
             assert_eq!(
-                v.message(),
-                &MidiMessage::NoteOn(Channel::from(0), Note::from(36), Value7::from(127))
+                v.message,
+                MidiMessage::NoteOn(Channel::from(0), Note::from(36), Value7::from(127))
             );
-            assert_eq!(Some(Err(MidiPacketParsingError::InvalidData)), iter.next());
+            assert_eq!(Some(Err(MidiPacketParsingError::MissingDataPacket)), iter.next());
             assert_eq!(None, iter.next());
         }
     }
