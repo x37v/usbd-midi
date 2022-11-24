@@ -1,6 +1,6 @@
-use crate::{cable_number::CableNumber, code_index_number::CodeIndexNumber};
+use crate::{cable_number::CableNumber, code_index_number::CodeIndexNumber, midi_types::MidiMessage, MidiParseError};
 use core::convert::TryFrom;
-use midi_convert::{midi_types::MidiMessage, MidiParseError, MidiRenderSlice, MidiTryParseSlice};
+use midi_convert::{MidiRenderSlice, MidiTryParseSlice};
 
 /// A packet that communicates with the host
 /// Currently supported is sending the specified normal midi

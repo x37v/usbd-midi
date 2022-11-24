@@ -1,7 +1,7 @@
 #![no_std]
 
 /// re-export midi_types
-pub use midi_convert::midi_types;
+pub use midi_convert::{midi_types, MidiParseError};
 
 pub mod constants;
 
