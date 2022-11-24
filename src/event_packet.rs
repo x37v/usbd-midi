@@ -1,4 +1,7 @@
-use crate::{cable_number::CableNumber, code_index_number::CodeIndexNumber, midi_types::MidiMessage, MidiParseError};
+use crate::{
+    cable_number::CableNumber, code_index_number::CodeIndexNumber, midi_types::MidiMessage,
+    MidiParseError,
+};
 use core::convert::TryFrom;
 use midi_convert::{MidiRenderSlice, MidiTryParseSlice};
 
