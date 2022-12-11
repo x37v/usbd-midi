@@ -40,7 +40,7 @@ impl From<(CableNumber, MidiMessage)> for UsbMidiEventPacket {
 
 #[derive(Debug, PartialEq, Clone)]
 pub enum MidiPacketParsingError {
-    MissingCableNumber,
+    MissingHeader,
     MissingDataPacket,
     ParseError(MidiParseError),
 }
@@ -51,7 +51,7 @@ impl TryFrom<&[u8]> for UsbMidiEventPacket {
     fn try_from(value: &[u8]) -> Result<Self, Self::Error> {
         let raw_cable_number = match value.get(0) {
             Some(byte) => *byte >> 4,
-            None => return Err(MidiPacketParsingError::MissingCableNumber),
+            None => return Err(MidiPacketParsingError::MissingHeader),
         };
 
         let cable_number =
