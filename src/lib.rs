@@ -1,8 +1,8 @@
 #![no_std]
 
 /// re-exports
-pub use midi_types;
 pub use midi_convert;
+pub use midi_types;
 
 pub mod constants;
 

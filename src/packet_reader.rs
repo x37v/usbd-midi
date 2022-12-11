@@ -35,8 +35,8 @@ impl<'a> ExactSizeIterator for MidiPacketBufferReader<'a> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::midi_types::{Channel, Control, MidiMessage, Note, Program, Value14, Value7};
     use crate::midi_convert::MidiParseError;
+    use crate::midi_types::{Channel, Control, MidiMessage, Note, Program, Value14, Value7};
     const VALID_BUF: [u8; 64] = [
         9, 144, 36, 127, //note on
         8, 128, 36, 0, //note off
@@ -140,7 +140,12 @@ mod tests {
                 v.message,
                 MidiMessage::NoteOn(Channel::from(0), Note::from(36), Value7::from(127))
             );
-            assert_eq!(Some(Err(MidiPacketParsingError::ParseError(MidiParseError::BufferTooShort))), iter.next());
+            assert_eq!(
+                Some(Err(MidiPacketParsingError::ParseError(
+                    MidiParseError::BufferTooShort
+                ))),
+                iter.next()
+            );
             assert_eq!(None, iter.next());
         }
     }
